@@ -301,30 +301,5 @@ describe('angularValidator', function () {
     });
   });
 
-  describe('form without "name" attribute', function () {
-    beforeEach(inject(function ($rootScope, $compile) {
-      scope = $rootScope.$new();
-
-      htmlForm = angular.element(
-        '<form angular-validator>' +
-        '<input ng-model="model.firstName" validate-on="dirty" name="firstName" type="text" required ng-maxlength="5"/>' +
-        '<input ng-model="model.lastName" validate-on="dirty" name="firstName" type="text" required ng-maxlength="5"/>' +
-        '</form>'
-      );
-
-      element = $compile(htmlForm)(scope);
-      scope.$digest();
-    }));
-
-    it('should throw error', function () {
-      var formResult = function () {
-       htmlForm.triggerHandler('submit');
-
-      };
-      //console.log("What it returns", formResult());
-
-      expect(formResult).toBeDefined();//new Error("You must provide a name for the form to validate"));
-    });
-  });
 
 });

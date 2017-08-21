@@ -16,8 +16,7 @@ angular.module('angularValidator').directive('angularValidator', ['$injector', '
                 // Uses a ransom to prevent duplicate form names.
                 if (!attrs.name) {
                     // console.log("Form name absent");
-                    throw new Error("You must provide a name for the form to validate");///**'ERROR! AngularValidator -> Your form element(<form>) is missing a name. The form name is required, also each field must have a name attribute before it can be validated'**/);
-                    return;
+                    throw new Error("ERROR! AngularValidator -> Your form element(<form>) is missing a name. The form name is required, also each field must have a name attribute before it can be validated");///**''**/);
                 }
 
                 // Iterate through all the children of the form element and add a `name` attribute to the ones
