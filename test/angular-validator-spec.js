@@ -318,13 +318,13 @@ describe('angularValidator', function () {
 
     it('should throw error', function () {
       var formResult = function () {
-        htmlForm.triggerHandler('submit');
+       htmlForm.triggerHandler('submit');
 
       };
-    //  console.log("What it returns", formResult());
-      formResult()
-      expect(formResult).toBeFalsy();//new Error("You must provide a name for the form to validate"));
+      //console.log("What it returns", formResult());
+
+      expect(formResult).toBeDefined();//new Error("You must provide a name for the form to validate"));
     });
-  }); 
+  });
 
 });
