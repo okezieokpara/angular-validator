@@ -254,6 +254,31 @@ describe('angularValidator', function () {
     });
   });
 
+
+  describe('form with some fields missing the "name" attribute', function () {
+    beforeEach(inject(function ($rootScope, $compile) {
+      scope = $rootScope.$new();
+
+      htmlForm = angular.element(
+        '<form name="myForm" angular-validator>' +
+        '<input ng-model="model.firstName" validate-on="dirty" type="text" required ng-maxlength="5"/>' +
+        '<input ng-model="model.lastName" validate-on="dirty" name="firstName" type="text" required ng-maxlength="5" angular-validator-quiet/>' +
+        '</form>'
+      );
+
+      element = $compile(htmlForm)(scope);
+      scope.$digest();
+    }));
+
+    it('should show ignore unnamed fields and warn', function () {
+      var formResult = function () {
+        htmlForm.triggerHandler('submit');
+
+      };
+      expect(formResult).not.toThrowError();
+    });
+  });
+
   describe('form with attribute "angular-validator-quiet"', function () {
     beforeEach(inject(function ($rootScope, $compile) {
       scope = $rootScope.$new();
@@ -276,14 +301,14 @@ describe('angularValidator', function () {
     });
   });
 
-  describe('form with without "name" attribute', function () {
+  describe('form without "name" attribute', function () {
     beforeEach(inject(function ($rootScope, $compile) {
       scope = $rootScope.$new();
 
       htmlForm = angular.element(
         '<form angular-validator>' +
         '<input ng-model="model.firstName" validate-on="dirty" name="firstName" type="text" required ng-maxlength="5"/>' +
-        '<input ng-model="model.lastName" validate-on="dirty" name="firstName" type="text" required ng-maxlength="5" angular-validator-quiet/>' +
+        '<input ng-model="model.lastName" validate-on="dirty" name="firstName" type="text" required ng-maxlength="5"/>' +
         '</form>'
       );
 
@@ -291,12 +316,15 @@ describe('angularValidator', function () {
       scope.$digest();
     }));
 
-    it('should throw an error', function () {
+    it('should throw error', function () {
       var formResult = function () {
         htmlForm.triggerHandler('submit');
 
-      }
-      expect(formResult).toThrow("The form is missing 'name' attribute");
+      };
+    //  console.log("What it returns", formResult());
+      formResult()
+      expect(formResult).toBeFalsy();//new Error("You must provide a name for the form to validate"));
     });
-  });
+  }); 
+
 });
